@@ -126,7 +126,7 @@ var Aoe_Static = {
                 data,
                 function (response) {
                     for(var id in response.blocks) {
-                        $('#' + id).html(response.blocks[id]);
+                        $('#' + id).replaceWith(response.blocks[id]);
                         localStorage.setItem('aoe_static_blocks_' + data.getBlocks[id], response.blocks[id]);
                     }
                     jQuery('body').trigger('aoestatic_afterblockreplace', response);
