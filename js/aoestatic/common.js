@@ -52,7 +52,8 @@ var Aoe_Static = {
 
     isLoggedIn: function() {
         var cookieValues = this.getCookieContent();
-        return typeof cookieValues['customername'] != 'undefined' && cookieValues['customername'].length;
+        //return typeof cookieValues['customername'] != 'undefined' && cookieValues['customername'].length;
+        return typeof cookieValues['isloggedin'] != 'undefined' && cookieValues['isloggedin'] == 1;
     },
 
     /**
@@ -127,7 +128,10 @@ var Aoe_Static = {
                 function (response) {
                     for(var id in response.blocks) {
                         $('#' + id).replaceWith(response.blocks[id]);
-                        localStorage.setItem('aoe_static_blocks_' + data.getBlocks[id], response.blocks[id]);
+                        // try to save in localStorage if allowed (f.e. not allowed in private mode on iOS)
+                        try {
+                            localStorage.setItem('aoe_static_blocks_' + data.getBlocks[id], response.blocks[id]);
+                        } catch(e) {}
                     }
                     jQuery('body').trigger('aoestatic_afterblockreplace', response);
                 },

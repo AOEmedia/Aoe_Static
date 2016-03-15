@@ -54,7 +54,7 @@ class Aoe_Static_Model_Observer
         /* @var $session Mage_Customer_Model_Session */
         if ($session->isLoggedIn()) {
             $loggedIn     = '1';
-            $customerName = Mage::helper('core')->escapeHtml($session->getCustomer()->getName());
+            $customerName = Mage::helper('core')->escapeHtml(trim($session->getCustomer()->getName()));
         }
 
         /** @var Aoe_Static_Model_Cache_Marker $cacheMarker */
@@ -339,7 +339,7 @@ class Aoe_Static_Model_Observer
             if (!empty($errors)) {
                 $this->_addSessionMessage('error', $helper->__("Static Purge failed"));
             } else {
-                $this->_addSessionMessage('success', $helper->__("Static Purge failed"));
+                $this->_addSessionMessage('success', $helper->__("Static Purge succeed"));
             }
 
             return $this;
