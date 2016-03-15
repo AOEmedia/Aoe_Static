@@ -17,7 +17,7 @@ var Aoe_Static = {
         this.storeId = storeId;
         this.websiteId = websiteId;
         this.fullActionName = fullactionname;
-        this.ajaxHomeUrl = ajaxhome_url;
+        this.ajaxHomeUrl = ajaxhome_url + "?currentProductId=" + currentproductid;
         this.currentProductId = currentproductid;
 
         this.populatePage();
