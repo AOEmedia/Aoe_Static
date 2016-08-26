@@ -86,6 +86,8 @@ class Aoe_Static_CallController extends Mage_Core_Controller_Front_Action
         }
         $response['messages'] = $messages;
 
+        $response['form_key'] =  Mage::getModel('core/session')->getFormKey();
+
         $this->getResponse()->setBody(Zend_Json::encode($response));
     }
 

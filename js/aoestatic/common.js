@@ -133,10 +133,32 @@ var Aoe_Static = {
                             localStorage.setItem('aoe_static_blocks_' + data.getBlocks[id], response.blocks[id]);
                         } catch(e) {}
                     }
+                    if (response.form_key) {
+                        Aoe_Static.replaceFormKey(response.form_key);
+                    }
                     jQuery('body').trigger('aoestatic_afterblockreplace', response);
                 },
                 'json'
             );
+        });
+    },
+
+    // replace form_key in links and forms
+    replaceFormKey: function (form_key) {
+        function newUrl(oldUrl) {
+            return oldUrl.replace(/\/form_key\/.*\//g, '/form_key/' + form_key + '/');
+        }
+
+        jQuery('a[href*="form_key"]').each(function () {
+            var oldLink = jQuery(this).attr('href');
+            var newLink = newUrl(oldLink);
+            jQuery(this).attr('href', newLink);
+        });
+
+        jQuery('form[action*="form_key"]').each(function () {
+            var oldAction = jQuery(this).attr('action');
+            var newAction = newUrl(oldAction);
+            jQuery(this).attr('action', newAction);
         });
     }
 };
