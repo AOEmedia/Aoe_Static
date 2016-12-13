@@ -56,6 +56,7 @@ class Aoe_Static_Model_Observer
         $customerName = '';
         $loggedIn     = '0';
         $session      = Mage::getSingleton('customer/session');
+        $customerGroup = $session->getCustomerGroupId();
         /* @var $session Mage_Customer_Model_Session */
         if ($session->isLoggedIn()) {
             $loggedIn     = '1';
@@ -69,6 +70,7 @@ class Aoe_Static_Model_Observer
             '###CUSTOMERNAME###'        => $customerName,
             '###ISLOGGEDIN###'          => $loggedIn,
             '###NUMBEROFITEMSINCART###' => Mage::helper('checkout/cart')->getSummaryCount(),
+            '###CUSTOMERGROUP###'       => $customerGroup,
         ));
 
         // apply default configuration in any case
@@ -84,9 +86,9 @@ class Aoe_Static_Model_Observer
             $conf = $this->_config->getActionConfiguration('uncached');
         }
 
-		$request = $controllerAction->getRequest();
-		// apply the configuration
-		if ($conf && $request->isDispatched()) {
+        $request = $controllerAction->getRequest();
+        // apply the configuration
+        if ($conf && $request->isDispatched()) {
             $this->applyConf($conf, $response);
         }
 
@@ -302,9 +304,9 @@ class Aoe_Static_Model_Observer
         $originalStockData = $stockItem->getOrigData('is_in_stock');
 
         if ((!is_null($originalStockData)
-            && $stockItem->getIsInStock() != $originalStockData
-            && $stockItem->getProductId() > 0)
-        || $stockItem->getStockStatusChangedAuto()
+                && $stockItem->getIsInStock() != $originalStockData
+                && $stockItem->getProductId() > 0)
+            || $stockItem->getStockStatusChangedAuto()
         ) {
             $tagsToPurge = array();
             /** @var $helper Aoe_Static_Helper_Data */
