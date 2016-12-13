@@ -86,6 +86,13 @@ sub vcl_hash {
     if (req.http.https) {
         hash_data(req.http.https);
     }
+
+    if (req.http.cookie ~ "customergroup=") {
+        set req.http.X-TMP-CUSTOMERGROUP = regsub(req.http.cookie, ".*customergroup=([^;]+);.*", "\1");
+        hash_data(req.http.X-TMP-CUSTOMERGROUP);
+        unset req.http.X-TMP-CUSTOMERGROUP;
+    }
+
     return (lookup);
 }
 
