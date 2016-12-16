@@ -140,8 +140,11 @@ class Aoe_Static_Model_Cache_Control
         if ($this->_enabled && $this->_maxAge) {
             $maxAge = (int) $this->_maxAge;
             $response = Mage::app()->getResponse();
-            $response->setHeader('Cache-Control', 'max-age=' . $maxAge, true);
-            $response->setHeader('Expires', gmdate("D, d M Y H:i:s", time() + $maxAge) . ' GMT', true);
+            //Cache with browser
+            if(Mage::getStoreConfigFlag('dev/aoestatic/cachebrowser')){
+                $response->setHeader('Cache-Control', 'max-age=' . $maxAge, true);
+                $response->setHeader('Expires', gmdate("D, d M Y H:i:s", time() + $maxAge) . ' GMT', true);
+            }
             $response->setHeader('X-Tags', implode(self::TAG_DELIMITER, array_keys($this->_tags)));
             $response->setHeader('X-Aoestatic', 'cache', true);
             $response->setHeader('X-Aoestatic-Lifetime', (int) $maxAge, true);
