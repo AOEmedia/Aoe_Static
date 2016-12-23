@@ -111,13 +111,13 @@ class Aoe_Static_Model_Cache_Control
      * Parse the requested tag and return a clean version
      *
      * @param string $tag
-     * @param bool   $withStore
+     * @param bool $withStore
      *
      * @return string
      */
     public function normalizeTag($tag, $withStore = false)
     {
-        if(is_array($tag)) {
+        if (is_array($tag)) {
             $tag = implode(self::PART_DELIMITER, $tag);
         }
 
@@ -138,16 +138,19 @@ class Aoe_Static_Model_Cache_Control
     public function applyCacheHeaders()
     {
         if ($this->_enabled && $this->_maxAge) {
-            $maxAge = (int) $this->_maxAge;
+            $maxAge = (int)$this->_maxAge;
             $response = Mage::app()->getResponse();
             //Cache with browser
-            if(Mage::getStoreConfigFlag('dev/aoestatic/cachebrowser')){
+            if (Mage::getStoreConfigFlag('dev/aoestatic/cachebrowser')) {
                 $response->setHeader('Cache-Control', 'max-age=' . $maxAge, true);
                 $response->setHeader('Expires', gmdate("D, d M Y H:i:s", time() + $maxAge) . ' GMT', true);
+            } else {
+                $response->setHeader('Cache-Control', 'max-age=0', true);
+                $response->setHeader('Expires', gmdate("D, d M Y H:i:s", time()) . ' GMT', true);
             }
             $response->setHeader('X-Tags', implode(self::TAG_DELIMITER, array_keys($this->_tags)));
             $response->setHeader('X-Aoestatic', 'cache', true);
-            $response->setHeader('X-Aoestatic-Lifetime', (int) $maxAge, true);
+            $response->setHeader('X-Aoestatic-Lifetime', (int)$maxAge, true);
         }
 
         return $this;
@@ -181,7 +184,7 @@ class Aoe_Static_Model_Cache_Control
             //add child products tags
             if ($product->getTypeId() == Mage_Catalog_Model_Product_Type_Configurable::TYPE_CODE) {
                 $childProductsIds = $product->getTypeInstance()->getUsedProductIds();
-                foreach($childProductsIds as $id) {
+                foreach ($childProductsIds as $id) {
                     $tags[] = 'product-' . $id;
                 }
             }

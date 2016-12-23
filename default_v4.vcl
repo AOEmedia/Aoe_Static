@@ -77,6 +77,9 @@ sub vcl_recv {
 }
 
 sub vcl_hash {
+    if (req.http.Cookie ~ "customergroup=") {
+        hash_data(regsub(req.http.Cookie, "^.*?customergroup=([^;]*);*.*$", "\1"));
+    }
     hash_data(req.url);
     if (req.http.host) {
         hash_data(req.http.host);
