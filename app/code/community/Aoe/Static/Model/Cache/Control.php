@@ -145,8 +145,8 @@ class Aoe_Static_Model_Cache_Control
                 $response->setHeader('Cache-Control', 'max-age=' . $maxAge, true);
                 $response->setHeader('Expires', gmdate("D, d M Y H:i:s", time() + $maxAge) . ' GMT', true);
             } else {
-                $response->setHeader('Cache-Control', 'no-cache', true);
-                $response->setHeader('Expires', gmdate("D, d M Y H:i:s", time()) . ' GMT', true);
+                $response->setHeader('Cache-Control', 'no-cache, no-store, must-revalidate', true);
+                $response->setHeader('Expires', '0', true);
             }
             $response->setHeader('X-Tags', implode(self::TAG_DELIMITER, array_keys($this->_tags)));
             $response->setHeader('X-Aoestatic', 'cache', true);
