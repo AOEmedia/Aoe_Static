@@ -203,7 +203,7 @@ class Aoe_Static_Model_Observer
     {
         if (
             (false === $this->messagesToShow) &&
-            (Mage::app()->getLayout()->getMessagesBlock()->getMessageCollection()->count() > 0)
+            (Mage::getSingleton('core/session')->getMessages()->count() > 0)
         ) {
             $this->messagesToShow = true;
         }
