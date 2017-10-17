@@ -77,6 +77,12 @@ sub vcl_recv {
 }
 
 sub vcl_hash {
+    if (req.http.Cookie ~ "customergroup=") {
+        hash_data(regsub(req.http.Cookie, "^.*?customergroup=([^;]*);*.*$", "\1"));
+    }
+    if (req.http.Cookie ~ "currency=") {
+        hash_data(regsub(req.http.Cookie, "^.*?currency=([^;]*);*.*$", "\1"));
+    }
     hash_data(req.url);
     if (req.http.host) {
         hash_data(req.http.host);
@@ -86,6 +92,13 @@ sub vcl_hash {
     if (req.http.https) {
         hash_data(req.http.https);
     }
+
+    if (req.http.cookie ~ "customergroup=") {
+        set req.http.X-TMP-CUSTOMERGROUP = regsub(req.http.cookie, ".*customergroup=([^;]+);.*", "\1");
+        hash_data(req.http.X-TMP-CUSTOMERGROUP);
+        unset req.http.X-TMP-CUSTOMERGROUP;
+    }
+
     return (lookup);
 }
 

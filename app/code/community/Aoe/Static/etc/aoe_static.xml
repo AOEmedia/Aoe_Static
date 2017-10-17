@@ -81,6 +81,20 @@
                     <path><![CDATA[/]]></path>
                     <httponly>0</httponly>
                 </numberofitemsincart>
+                <customergroup>
+                    <scope>customer</scope><!-- global/website/store/customer (customer will check the configuration in customer/account_share/scope) -->
+                    <value>###CUSTOMERGROUP###</value>
+                    <period>3600</period>
+                    <path><![CDATA[/]]></path>
+                    <httponly>0</httponly>
+                </customergroup>
+                <currency>
+                    <scope>customer</scope><!-- global/website/store/customer (customer will check the configuration in customer/account_share/scope) -->
+                    <value>###CURRENCY###</value>
+                    <period>3600</period>
+                    <path><![CDATA[/]]></path>
+                    <httponly>0</httponly>
+                </currency>
             </cookies>
             <handles>
                 <!-- This is to support compatibility with previous behaviour -->
