@@ -57,6 +57,7 @@ class Aoe_Static_Model_Observer
         $loggedIn     = '0';
         $session      = Mage::getSingleton('customer/session');
         $customerGroup = $session->getCustomerGroupId();
+        $currency = Mage::app()->getStore()->getCurrentCurrencyCode();
         /* @var $session Mage_Customer_Model_Session */
         if ($session->isLoggedIn()) {
             $loggedIn     = '1';
@@ -71,6 +72,7 @@ class Aoe_Static_Model_Observer
             '###ISLOGGEDIN###'          => $loggedIn,
             '###NUMBEROFITEMSINCART###' => Mage::helper('checkout/cart')->getSummaryCount(),
             '###CUSTOMERGROUP###'       => $customerGroup,
+            '###CURRENCY###'            => $currency,
         ));
 
         // apply default configuration in any case

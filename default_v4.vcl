@@ -80,6 +80,9 @@ sub vcl_hash {
     if (req.http.Cookie ~ "customergroup=") {
         hash_data(regsub(req.http.Cookie, "^.*?customergroup=([^;]*);*.*$", "\1"));
     }
+    if (req.http.Cookie ~ "currency=") {
+        hash_data(regsub(req.http.Cookie, "^.*?currency=([^;]*);*.*$", "\1"));
+    }
     hash_data(req.url);
     if (req.http.host) {
         hash_data(req.http.host);
